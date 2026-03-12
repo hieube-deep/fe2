@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Button, Form, Input, Space } from "antd"
 function Lap2() {
     const layout = {

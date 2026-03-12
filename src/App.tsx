@@ -1,10 +1,11 @@
 import { Toaster } from "react-hot-toast";
 import { Link, Router } from "react-router-dom";
 import { Button } from "antd";
-import Lap1 from "./pages/lap1"
+import Lap1 from "./lap1/bài1"
 import { Route, Routes } from "react-router-dom";
-import Lap2 from "./pages/lap2";
-import UserList from "./pages/lap3";
+import Lap2 from "./lap1/bài2"
+import UserList from "./lap1/bài3"
+import E1 from "./lap2/E1";
 function App() {
   return (
     <>
@@ -24,7 +25,7 @@ function App() {
             <Link to="/add" className="hover:text-gray-200">
               Thêm mới
             </Link>
-            <Link to="/edit" className="hover:text-gray-200">
+            <Link to="/lap2" className="hover:text-gray-200">
               sửa
             </Link>
           </div>
@@ -54,6 +55,7 @@ function App() {
         <Route path="/list" element={<Lap1 />} />
         <Route path="/add" element={<Lap2 />} />
         <Route path="/edit" element={<UserList />} />
+        <Route path="/lap2" element={<E1 />} />
       </Routes>
       <Toaster />
     </>
