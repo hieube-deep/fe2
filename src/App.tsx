@@ -7,6 +7,7 @@ import Lap2 from "./lap1/bài2"
 import UserList from "./lap1/bài3"
 import E1 from "./lap2/E1";
 import LoginForm from "./lap3/E1";
+import E2 from "./lap3/E2";
 function App() {
   return (
     <>
@@ -32,7 +33,7 @@ function App() {
           </div>
 
           <div className="hidden md:flex items-center space-x-6">
-            <Link to="#" className="hover:text-gray-200">
+            <Link to="/E2" className="hover:text-gray-200">
               Đăng nhập
             </Link>
             <Link to="#" className="hover:text-gray-200">
@@ -58,6 +59,7 @@ function App() {
         <Route path="/edit" element={<UserList />} />
         <Route path="/lap2" element={<E1 />} />
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/E2" element={<E2 />} />
       </Routes>
       <Toaster />
     </>
