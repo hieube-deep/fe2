@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import Lap2 from "./lap1/bài2"
 import UserList from "./lap1/bài3"
 import E1 from "./lap2/E1";
+import LoginForm from "./lap3/E1";
 function App() {
   return (
     <>
@@ -16,7 +17,7 @@ function App() {
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="#" className="hover:text-gray-200">
+            <Link to="/login" className="hover:text-gray-200">
               Trang chủ
             </Link>
             <Link to="/list" className="hover:text-gray-200">
@@ -56,6 +57,7 @@ function App() {
         <Route path="/add" element={<Lap2 />} />
         <Route path="/edit" element={<UserList />} />
         <Route path="/lap2" element={<E1 />} />
+        <Route path="/login" element={<LoginForm />} />
       </Routes>
       <Toaster />
     </>
