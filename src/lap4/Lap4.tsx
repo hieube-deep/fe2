@@ -1,12 +1,33 @@
-import React from 'react'
+import { useEffect, useState } from "react";
 import { Form, Input, Button, Select } from "antd";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+type story = {
+    title: string,
+    author: string,
+    description: string,
+    category: String,
+}
 function Lap4() {
-    const { mutate } = useMutation({
-        mutationFn: async (values: any) => {
+    const [categories, setCategories] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const { data } = await axios.get("http://localhost:3000/categories");
+                setCategories(data);
+            } catch (error) {
+                toast.error("Lỗi load danh mục");
+            }
+        };
+
+        fetchCategories();
+    }, []);
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: async (values: story) => {
             await axios.post('http://localhost:3000/stories', values);
         },
         onSuccess: () => {
@@ -18,13 +39,13 @@ function Lap4() {
         },
     });
 
-    const onFinshin = (values: any) => {
+    const onFinshin = (values: story) => {
         mutate(values);
     }
 
     return (
         <div className='flex items-center justify-center  bg-gray-10'>
-            <div className='bg-white p-6 rounded-xl shadow-md w-[400px]'>
+            <div className='bg-white p-6 rounded-xl shadow-md w-[500px]'>
                 <Form onFinish={onFinshin}>
                     <Form.Item label="Tên truyện"
                         name="title"
@@ -36,15 +57,20 @@ function Lap4() {
                         rules={[{ required: true, message: "nhập tác giả" }]}>
                         <Input />
                     </Form.Item>
+                    <Form.Item label="mô tả"
+                        name="description"
+                    >
+                        <Input.TextArea placeholder='nhập mô tả truyện' rows={5} />
+                    </Form.Item>
                     <Form.Item label="Danh mục" name="category">
                         <Select placeholder="Chọn danh mục"
-                            options={[
-                                { label: "Hành động", value: "Hành động" },
-                                { label: "Hài kịch", value: "Hài kịch" }
-                            ]}
+                            options={categories.map((item) => ({
+                                label: item.name,
+                                value: item.name,
+                            }))}
                         />
                     </Form.Item>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" loading={isPending}>
                         Thêm
                     </Button>
                 </Form>
