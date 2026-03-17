@@ -1,4 +1,24 @@
 {
-  "products": [],
+  "stories": [
+    {
+      "title": "1233",
+      "author": "hiếu",
+      "category": "Hành động",
+      "id": 1
+    },
+    {
+      "title": "1233",
+      "author": "hiếu",
+      "category": "Hành động",
+      "id": 2
+    },
+    {
+      "title": "1dđ",
+      "author": "hiếu",
+      "category": "Hài kịch",
+      "id": 3
+    }
+  ],
+  "categories": [],
   "users": []
 }

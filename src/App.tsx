@@ -8,6 +8,7 @@ import UserList from "./lap1/bài3"
 import E1 from "./lap2/E1";
 import LoginForm from "./lap3/E1";
 import E2 from "./lap3/E2";
+import Lap4 from "./lap4/Lap4";
 function App() {
   return (
     <>
@@ -36,7 +37,7 @@ function App() {
             <Link to="/E2" className="hover:text-gray-200">
               Đăng nhập
             </Link>
-            <Link to="#" className="hover:text-gray-200">
+            <Link to="/lap4" className="hover:text-gray-200">
               Đăng ký
             </Link>
           </div>
@@ -46,12 +47,6 @@ function App() {
       {/* MAIN CONTENT */}
       <div className="max-w-6xl mx-auto mt-10 px-4 text-center">
         <h1 className="text-4xl font-bold mb-4">Chào mừng đến với WEB2091</h1>
-        <Button type="primary">Click me</Button>
-        <Button type="dashed">Click me</Button>
-        <Button type="link">Click me</Button>
-        <Button type="default">Click me</Button>
-        <Button type="text">Click me</Button>
-
       </div>
       <Routes>
         <Route path="/list" element={<Lap1 />} />
@@ -60,6 +55,7 @@ function App() {
         <Route path="/lap2" element={<E1 />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/E2" element={<E2 />} />
+        <Route path="/lap4" element={<Lap4 />} />
       </Routes>
       <Toaster />
     </>
