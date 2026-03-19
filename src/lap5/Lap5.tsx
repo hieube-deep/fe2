@@ -69,7 +69,7 @@ export function ListStory() {
 
     return (
         <div>
-            <Table columns={columns} dataSource={data} pagination={{ pageSize: 3 }} />
+            <Table columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
         </div>
     )
 }
