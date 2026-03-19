@@ -9,6 +9,7 @@ import E1 from "./lap2/E1";
 import LoginForm from "./lap3/E1";
 import E2 from "./lap3/E2";
 import Lap4 from "./lap4/Lap4";
+import { ListStory } from "./lap5/Lap5";
 function App() {
   return (
     <>
@@ -49,13 +50,13 @@ function App() {
         <h1 className="text-4xl font-bold mb-4">Chào mừng đến với WEB2091</h1>
       </div>
       <Routes>
-        <Route path="/list" element={<Lap1 />} />
         <Route path="/add" element={<Lap2 />} />
         <Route path="/edit" element={<UserList />} />
         <Route path="/lap2" element={<E1 />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/E2" element={<E2 />} />
         <Route path="/lap4" element={<Lap4 />} />
+        <Route path="/list" element={<ListStory />} />
       </Routes>
       <Toaster />
     </>

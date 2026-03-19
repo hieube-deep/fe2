@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Form, Input, Button, Select } from "antd";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 type story = {
     title: string,
@@ -11,27 +12,24 @@ type story = {
     category: String,
 }
 function Lap4() {
-    const [categories, setCategories] = useState<any[]>([]);
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const { data } = await axios.get("http://localhost:3000/categories");
-                setCategories(data);
-            } catch (error) {
-                toast.error("Lỗi load danh mục");
-            }
-        };
-
-        fetchCategories();
-    }, []);
-
+    const { data: categories = [] } = useQuery({
+        queryKey: ["categories"],
+        queryFn: async () => {
+            const res = await axios.get("http://localhost:3000/categories");
+            return res.data;
+        }
+    })
+    const nav = useNavigate();
     const { mutate, isPending } = useMutation({
         mutationFn: async (values: story) => {
-            await axios.post('http://localhost:3000/stories', values);
+            await axios.post('http://localhost:3000/stories', {
+                ...values,
+                createdAt: new Date().toISOString()
+            });
         },
         onSuccess: () => {
             toast.success("Thêm truyện thành công");
+            nav("/list")
         },
 
         onError: () => {
@@ -64,7 +62,7 @@ function Lap4() {
                     </Form.Item>
                     <Form.Item label="Danh mục" name="category">
                         <Select placeholder="Chọn danh mục"
-                            options={categories.map((item) => ({
+                            options={categories.map((item: any) => ({
                                 label: item.name,
                                 value: item.name,
                             }))}

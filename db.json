@@ -1,29 +1,12 @@
 {
   "stories": [
     {
-      "title": "1233",
-      "author": "hiếu",
-      "category": "Hành động",
-      "id": 1
-    },
-    {
-      "title": "1233",
-      "author": "hiếu",
-      "category": "Hành động",
-      "id": 2
-    },
-    {
-      "title": "1dđ",
-      "author": "hiếu",
+      "title": "dragon ball",
+      "author": "Nguyễn Văn A",
+      "description": "qưer",
       "category": "Hài kịch",
-      "id": 3
-    },
-    {
-      "title": "1dđ",
-      "author": "hahaha",
-      "category": "Hài kịch",
-      "description ": "sdfghjkjhgsaAHJKJSAHJKJHSAá",
-      "id": 4
+      "createdAt": "2026-03-19T08:04:25.814Z",
+      "id": 8
     }
   ],
   "categories": [
