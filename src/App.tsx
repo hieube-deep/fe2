@@ -1,7 +1,5 @@
 import { Toaster } from "react-hot-toast";
-import { Link, Router } from "react-router-dom";
-import { Button } from "antd";
-import Lap1 from "./lap1/bài1"
+import { Link } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 import Lap2 from "./lap1/bài2"
 import UserList from "./lap1/bài3"
@@ -10,10 +8,37 @@ import LoginForm from "./lap3/E1";
 import E2 from "./lap3/E2";
 import Lap4 from "./lap4/Lap4";
 import { ListStory } from "./lap5/Lap5";
+import { useContext } from "react";
+import { UserContext } from "./context/userContext";
+import { ThemeContext } from "./context/themeContext";
+import { Button, Switch, Avatar, Typography } from "antd";
+
 function App() {
+  const context = useContext(UserContext);
+  const themeCtx = useContext(ThemeContext);
+
+  if (!context || !themeCtx) {
+    return (
+      <div>loading....</div>
+    )
+  }
+
+  const { user, setUser } = context;
+  const { isDarkMode, toggleTheme } = themeCtx;
+
+  const handleLogin = () => {
+    setUser({
+      name: "hiếu 123",
+      avatar: "https://i.pravatar.cc/150",
+    });
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+  };
   return (
-    <>
-      <nav className="bg-blue-600 text-white shadow">
+    <div style={{ minHeight: "100vh", backgroundColor: isDarkMode ? "#141414" : "#ffffff", color: isDarkMode ? "#ffffff" : "#000000" }}>
+      <nav className={`shadow ${isDarkMode ? "bg-gray-900 text-white" : "bg-blue-600 text-white"}`}>
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="#" className="text-xl font-semibold">
             <strong>WEB2091 App</strong>
@@ -26,7 +51,7 @@ function App() {
             <Link to="/list" className="hover:text-gray-200">
               Danh sách
             </Link>
-            <Link to="/add" className="hover:text-gray-200">
+            <Link to="/lap4" className="hover:text-gray-200">
               Thêm mới
             </Link>
             <Link to="/lap2" className="hover:text-gray-200">
@@ -35,16 +60,35 @@ function App() {
           </div>
 
           <div className="hidden md:flex items-center space-x-6">
-            <Link to="/E2" className="hover:text-gray-200">
-              Đăng nhập
-            </Link>
-            <Link to="/lap4" className="hover:text-gray-200">
-              Đăng ký
-            </Link>
+            <Switch
+              checked={isDarkMode}
+              onChange={toggleTheme}
+              checkedChildren="Dark"
+              unCheckedChildren="Light"
+            />
+            {user ? (
+              <div className="flex items-center space-x-3">
+                <Avatar src={user.avatar} />
+                <Typography.Text style={{ color: "white", margin: 0 }}>
+                  {user.name}
+                </Typography.Text>
+                <Button danger type="primary" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Button type="primary" onClick={handleLogin}>
+                  Đăng nhập
+                </Button>
+                <Link to="/lap4" className="hover:text-gray-200">
+                  Đăng ký
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
-
       {/* MAIN CONTENT */}
       <div className="max-w-6xl mx-auto mt-10 px-4 text-center">
         <h1 className="text-4xl font-bold mb-4">Chào mừng đến với WEB2091</h1>
@@ -59,7 +103,7 @@ function App() {
         <Route path="/list" element={<ListStory />} />
       </Routes>
       <Toaster />
-    </>
+    </div>
   );
 }
 

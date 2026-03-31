@@ -1,5 +1,5 @@
-import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Table, Button, Spin, Image } from "antd";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Table, Button } from "antd";
 import axios from "axios";
 export function ListStory() {
     const { data, isLoading } = useQuery({
@@ -50,7 +50,7 @@ export function ListStory() {
         },
         {
             title: "Action",
-            render: (text: string, record: any) => {
+            render: (_: string, record: any) => {
                 return (
                     <Button
                         style={{ background: "red", padding: "5px 10px", color: "white" }}
@@ -69,7 +69,7 @@ export function ListStory() {
 
     return (
         <div>
-            <Table columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
+            <Table columns={columns} dataSource={data} loading={isLoading} pagination={{ pageSize: 5 }} />
         </div>
     )
 }
