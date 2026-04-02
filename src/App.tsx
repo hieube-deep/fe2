@@ -12,11 +12,11 @@ import { useContext } from "react";
 import { UserContext } from "./context/userContext";
 import { ThemeContext } from "./context/themeContext";
 import { Button, Switch, Avatar, Typography } from "antd";
-
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
 function App() {
   const context = useContext(UserContext);
   const themeCtx = useContext(ThemeContext);
-
   if (!context || !themeCtx) {
     return (
       <div>loading....</div>
@@ -60,7 +60,7 @@ function App() {
           </div>
 
           <div className="hidden md:flex items-center space-x-6">
-            <Switch
+            {/* <Switch
               checked={isDarkMode}
               onChange={toggleTheme}
               checkedChildren="Dark"
@@ -85,7 +85,13 @@ function App() {
                   Đăng ký
                 </Link>
               </>
-            )}
+            )} */}
+            <Link to="/login" className="hover:text-gray-200">
+              Đăng nhập
+            </Link>
+            <Link to="/register" className="hover:text-gray-200">
+              Đăng ký
+            </Link>
           </div>
         </div>
       </nav>
@@ -97,10 +103,11 @@ function App() {
         <Route path="/add" element={<Lap2 />} />
         <Route path="/edit" element={<UserList />} />
         <Route path="/lap2" element={<E1 />} />
-        <Route path="/login" element={<LoginForm />} />
         <Route path="/E2" element={<E2 />} />
         <Route path="/lap4" element={<Lap4 />} />
         <Route path="/list" element={<ListStory />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       <Toaster />
     </div>

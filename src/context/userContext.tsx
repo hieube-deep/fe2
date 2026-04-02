@@ -1,4 +1,5 @@
 import { createContext, useState, ReactNode } from "react";
+import { useAuthStore } from "../useAuth/userAuth";
 
 export interface User {
     name: string;
