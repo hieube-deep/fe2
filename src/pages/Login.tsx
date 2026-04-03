@@ -11,7 +11,7 @@ export function Login() {
             const res = await axios.post("http://localhost:3000/login", value);
             return res.data;
         },
-        onSuccess: ({ data }) => {
+        onSuccess: (data) => {
             setUser({
                 user: data.user,
                 token: data.accessToken,

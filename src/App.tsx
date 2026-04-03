@@ -11,87 +11,64 @@ import { ListStory } from "./lap5/Lap5";
 import { useContext } from "react";
 import { UserContext } from "./context/userContext";
 import { ThemeContext } from "./context/themeContext";
-import { Button, Switch, Avatar, Typography } from "antd";
+import { Button, Avatar, Typography, Tag } from "antd";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+import { useAuthStore } from "./useAuth/userAuth";
 function App() {
   const context = useContext(UserContext);
   const themeCtx = useContext(ThemeContext);
+
+  const { user, logout } = useAuthStore();
+
   if (!context || !themeCtx) {
-    return (
-      <div>loading....</div>
-    )
+    return <div>loading....</div>;
   }
 
-  const { user, setUser } = context;
-  const { isDarkMode, toggleTheme } = themeCtx;
+  const { isDarkMode } = themeCtx;
 
-  const handleLogin = () => {
-    setUser({
-      name: "hiếu 123",
-      avatar: "https://i.pravatar.cc/150",
-    });
-  };
-
-  const handleLogout = () => {
-    setUser(null);
-  };
   return (
     <div style={{ minHeight: "100vh", backgroundColor: isDarkMode ? "#141414" : "#ffffff", color: isDarkMode ? "#ffffff" : "#000000" }}>
-      <nav className={`shadow ${isDarkMode ? "bg-gray-900 text-white" : "bg-blue-600 text-white"}`}>
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link to="#" className="text-xl font-semibold">
-            <strong>WEB2091 App</strong>
+      <nav style={{ background: "#1677ff", boxShadow: "0 2px 8px rgba(0,0,0,0.15)" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+
+          <Link to="#" style={{ color: "white", fontSize: 20, fontWeight: 700, textDecoration: "none" }}>
+            WEB2091 App
           </Link>
 
-          <div className="hidden md:flex items-center space-x-8">
-            <Link to="/login" className="hover:text-gray-200">
-              Trang chủ
-            </Link>
-            <Link to="/list" className="hover:text-gray-200">
-              Danh sách
-            </Link>
-            <Link to="/lap4" className="hover:text-gray-200">
-              Thêm mới
-            </Link>
-            <Link to="/lap2" className="hover:text-gray-200">
-              sửa
-            </Link>
+          <div style={{ display: "flex", gap: 24 }}>
+            <Link to="/login" style={{ color: "white", textDecoration: "none" }}>Trang chủ</Link>
+            <Link to="/list" style={{ color: "white", textDecoration: "none" }}>Danh sách</Link>
+            <Link to="/lap4" style={{ color: "white", textDecoration: "none" }}>Thêm mới</Link>
           </div>
 
-          <div className="hidden md:flex items-center space-x-6">
-            {/* <Switch
-              checked={isDarkMode}
-              onChange={toggleTheme}
-              checkedChildren="Dark"
-              unCheckedChildren="Light"
-            />
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             {user ? (
-              <div className="flex items-center space-x-3">
-                <Avatar src={user.avatar} />
-                <Typography.Text style={{ color: "white", margin: 0 }}>
-                  {user.name}
-                </Typography.Text>
-                <Button danger type="primary" onClick={handleLogout}>
+              <>
+                <Avatar style={{ backgroundColor: "#fff", color: "#1677ff", fontWeight: 700 }}>
+                  {user.email?.[0]?.toUpperCase() ?? "U"}
+                </Avatar>
+                <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.3 }}>
+                  <Typography.Text style={{ color: "white", fontSize: 13, fontWeight: 600 }}>
+                    {user.email}
+                  </Typography.Text>
+                  <Tag color="green" style={{ width: "fit-content", fontSize: 11, lineHeight: "16px" }}>
+                    ✓ Đã đăng nhập
+                  </Tag>
+                </div>
+                <Button danger type="primary" size="small" onClick={logout}>
                   Logout
                 </Button>
-              </div>
+              </>
             ) : (
               <>
-                <Button type="primary" onClick={handleLogin}>
-                  Đăng nhập
-                </Button>
-                <Link to="/lap4" className="hover:text-gray-200">
-                  Đăng ký
-                </Link>
+                <Tag color="default" style={{ color: "#fff", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.4)", fontSize: 12 }}>
+                  Chưa đăng nhập
+                </Tag>
+                <Link to="/login" style={{ color: "white", textDecoration: "none" }}>Đăng nhập</Link>
+                <Link to="/register" style={{ color: "white", textDecoration: "none" }}>Đăng ký</Link>
               </>
-            )} */}
-            <Link to="/login" className="hover:text-gray-200">
-              Đăng nhập
-            </Link>
-            <Link to="/register" className="hover:text-gray-200">
-              Đăng ký
-            </Link>
+            )}
           </div>
         </div>
       </nav>
