@@ -1,23 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Table, Button } from "antd";
-import axios from "axios";
+import { useCRUDStory } from "./hooks";
+
 export function ListStory() {
-    const { data, isLoading } = useQuery({
-        queryKey: ["stories"],
-        queryFn: async () => {
-            const res = await axios.get(" http://localhost:3000/stories");
-            return res.data;
-        }
-    });
-    const qc = useQueryClient();
-    const { mutate: deleteStory } = useMutation({
-        mutationFn: async (id: number) => {
-            await axios.delete(`http://localhost:3000/stories/${id}`);
-        },
-        onSuccess: () => {
-            qc.invalidateQueries({ queryKey: ["stories"] });
-        }
-    });
+    const { list, remove } = useCRUDStory();
+    const { data, isLoading } = list;
+
 
     const columns = [
         {
@@ -56,7 +43,7 @@ export function ListStory() {
                         style={{ background: "red", padding: "5px 10px", color: "white" }}
                         onClick={() => {
                             if (window.confirm("bạn có muốn xóa không")) {
-                                deleteStory(record.id);
+                                remove.mutate(record.id);
                             }
                         }}
                     >

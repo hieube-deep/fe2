@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-// Bài 1 - useUpdateStory
 export const useUpdateStory = () => {
     const queryClient = useQueryClient();
 
