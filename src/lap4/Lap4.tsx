@@ -12,51 +12,71 @@ type story = {
     category: String,
 }
 function Lap4() {
-    const { list, add } = useCRUDStory();
+    const { add } = useCRUDStory();
     const { isPending } = add;
-    const { data: categories } = list;
     const nav = useNavigate();
 
+    const { data: categories = [] } = useQuery({
+        queryKey: ["categories"],
+        queryFn: async () => {
+            const res = await axios.get("http://localhost:3000/categories");
+            return res.data;
+        },
+    });
+
     const onFinsish = (data: story) => {
-        add.mutate(data);
-        nav("/list")
-    }
+        add.mutate(data, {
+            onSuccess: () => {
+                toast.success("Thêm thành công");
+                nav("/list");
+            },
+            onError: () => {
+                toast.error("Lỗi rồi");
+            },
+        });
+    };
 
     return (
-        <div className='flex items-center justify-center  bg-gray-10'>
+        <div className='flex items-center justify-center bg-gray-10'>
             <div className='bg-white p-6 rounded-xl shadow-md w-[500px]'>
                 <Form onFinish={onFinsish}>
-                    <Form.Item label="Tên truyện"
+                    <Form.Item
+                        label="Tên truyện"
                         name="title"
-                        rules={[{ required: true, message: "Nhập tên truyện" }]}>
-                        <Input />
-                    </Form.Item>
-                    <Form.Item label="tác giả"
-                        name="author"
-                        rules={[{ required: true, message: "nhập tác giả" }]}>
-                        <Input />
-                    </Form.Item>
-                    <Form.Item label="mô tả"
-                        name="description"
+                        rules={[{ required: true, message: "Nhập tên truyện" }]}
                     >
-                        <Input.TextArea placeholder='nhập mô tả truyện' rows={5} />
+                        <Input />
                     </Form.Item>
+
+                    <Form.Item
+                        label="Tác giả"
+                        name="author"
+                        rules={[{ required: true, message: "Nhập tác giả" }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item label="Mô tả" name="description">
+                        <Input.TextArea rows={5} />
+                    </Form.Item>
+
                     <Form.Item label="Danh mục" name="category">
-                        <Select placeholder="Chọn danh mục"
+                        <Select
+                            placeholder="Chọn danh mục"
                             options={categories.map((item: any) => ({
                                 label: item.name,
                                 value: item.name,
                             }))}
                         />
                     </Form.Item>
+
                     <Button type="primary" htmlType="submit" loading={isPending}>
                         Thêm
                     </Button>
                 </Form>
             </div>
-
         </div>
-    )
+    );
 }
 
 export default Lap4
